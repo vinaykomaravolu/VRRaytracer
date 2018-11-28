@@ -28,12 +28,8 @@ using namespace std;
 #define R_APERTURE 0.1
 
 int main(int argc, char ** argv){
-    vector<Eigen::Vector3d> index;
-    load_obj("models/cube.obj",index);
-    for(int i = 0; i < index.size(); i++){
-        cout << index[i] << endl;
-    }
-    cout << "FILE READ\n";
+    vector<Eigen::Vector3d> cube;
+    load_obj("models/cube.obj",cube);
     //set up scene
     Scene scene;
     Eigen::Vector3d look_at = R_LOOK_AT;
