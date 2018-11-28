@@ -28,18 +28,23 @@ using namespace std;
 #define R_APERTURE 0.1
 
 int main(int argc, char ** argv){
+    // Model loading
     vector<Eigen::Vector3d> cube;
     load_obj("models/cube.obj",cube);
+
     //set up scene
     Scene scene;
     Eigen::Vector3d look_at = R_LOOK_AT;
     Eigen::Vector3d look_from(0.0,0.0,0.0);
     Camera camera(R_LOOK_FROM, R_LOOK_AT, Eigen::Vector3d(0,1,0), 20, double(R_WIDTH) / double(R_HEIGHT), R_APERTURE, R_DIST_TO_FOCUS);
    
-    scene.AddObject(new Sphere(Eigen::Vector3d(0,1,0), 1,new metal(Eigen::Vector3d(1.0, 1.0, 1.0), 0.2) ));
-    scene.AddObject(new Sphere(Eigen::Vector3d(-1.0,0.5,2), 0.4,new metal(Eigen::Vector3d(1.0, 1.0, 1.0), 0.0) ));
-    scene.AddObject(new Sphere(Eigen::Vector3d(1.5,0.5,0), 0.5, new lambertian(Eigen::Vector3d(1.0, 0.2, 0.5))));
-    scene.AddObject(new Sphere(Eigen::Vector3d(0,0.5,2), 0.5, new lambertian(Eigen::Vector3d(0.0, 1.0, 0.0))));
+    // Add objects to the scene
+    Mesh cubemesh(Eigen::Vector3d(0,0,0),Eigen::Vector3d(0,0,0),Eigen::Vector3d(1,1,1), cube, new lambertian(Eigen::Vector3d(1.0, 0.2, 0.5))); 
+
+    //scene.AddObject(new Sphere(Eigen::Vector3d(0,1,0), 1,new metal(Eigen::Vector3d(1.0, 1.0, 1.0), 0.2) ));
+    //scene.AddObject(new Sphere(Eigen::Vector3d(-1.0,0.5,2), 0.4,new metal(Eigen::Vector3d(1.0, 1.0, 1.0), 0.0) ));
+    //scene.AddObject(new Sphere(Eigen::Vector3d(1.5,0.5,0), 0.5, new lambertian(Eigen::Vector3d(1.0, 0.2, 0.5))));
+    //scene.AddObject(new Sphere(Eigen::Vector3d(0,0.5,2), 0.5, new lambertian(Eigen::Vector3d(0.0, 1.0, 0.0))));
      
     scene.AddObject(new PlaneBound(Eigen::Vector3d(0,0,0),Eigen::Vector3d(0,-1,0),Eigen::Vector3d(-2,-2, -2),Eigen::Vector3d(2,2,2),new lambertian(Eigen::Vector3d(0.5, 0.2, 0.7)))); 
     //scene.AddObject(new Plane(Eigen::Vector3d(0.0,0.0,0.0),Eigen::Vector3d(0,1,0), new lambertian(Eigen::Vector3d(0.5, 0.2, 0.7))));

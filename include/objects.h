@@ -7,6 +7,7 @@
 #include <cmath>
 #include "Ray.h"
 #include "hit_record.h"
+#include <vector>
 
 #ifndef Material_H
 #define Material_H
@@ -19,14 +20,7 @@ class Object
     virtual bool hit(Ray &ray, double tmin, double tmax, HitRecord &rec)
     {
     }
-
 };
-
-class Mesh: public Object{
-
-};
-
-
 
 class PlaneBound : public Object
 {
@@ -244,6 +238,50 @@ class Sphere : public Object
             }
             return false;
         }
+    }
+};
+
+class Mesh : public Object
+{
+  public:
+    vector<Triangle> faces;
+
+    Mesh(Eigen::Vector3d translate, Eigen::Vector3d rotate, Eigen::Vector3d scale, vector<Eigen::Vector3d> ind, Material *mat)
+    {
+
+        Eigen::Affine3d rx =
+            Eigen::Affine3d(Eigen::AngleAxisd(rotate.x(), Eigen::Vector3d(1, 0, 0)));
+        Eigen::Affine3d ry =
+            Eigen::Affine3d(Eigen::AngleAxisd(rotate.y(), Eigen::Vector3d(0, 1, 0)));
+        Eigen::Affine3d rz =
+            Eigen::Affine3d(Eigen::AngleAxisd(rotate.z(), Eigen::Vector3d(0, 0, 1)));
+        Eigen::Affine3d rot = rz * ry * rx;
+        Eigen::Affine3d tran = Eigen::Affine3d(Eigen::Translation3d(translate));
+        Eigen::Affine3d sca(Eigen::Scaling(scale));
+        Eigen::Affine3d modelMatrix = tran * rot * sca;
+        for (int i = 0; i < ind.size(); i += 3)
+        {
+            Eigen::Vector3d p1 = modelMatrix * ind[i];
+            Eigen::Vector3d p2 = modelMatrix * ind[i + 1];
+            Eigen::Vector3d p3 = modelMatrix * ind[i + 2];
+            Triangle new_face(p1, p2, p3, mat);
+            faces.push_back(new_face);
+        }
+    }
+
+    bool hit(Ray &ray, double tmin, double tmax, HitRecord &rec)
+    {
+        HitRecord closest;
+        bool hit = false;
+        double closest_value = tmax;
+        for(int object = 0; object < faces.size(); object++){
+            if(faces[object].hit(ray,tmin,closest_value,closest)){
+                hit = true;
+                closest_value = closest.t;
+                rec = closest;
+            }
+        }
+        return hit;
     }
 };
 
