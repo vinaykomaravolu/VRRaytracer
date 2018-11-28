@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-make && echo START RAYTRACER && ./build/raytracer && echo END RAYTRACER && convert image.ppm image.png 
