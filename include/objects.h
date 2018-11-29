@@ -250,11 +250,11 @@ class Mesh : public Object
     {
 
         Eigen::Affine3d rx =
-            Eigen::Affine3d(Eigen::AngleAxisd(rotate.x(), Eigen::Vector3d(1, 0, 0)));
+            Eigen::Affine3d(Eigen::AngleAxisd(rotate.x() * M_PI / 180.0, Eigen::Vector3d(1, 0, 0)));
         Eigen::Affine3d ry =
-            Eigen::Affine3d(Eigen::AngleAxisd(rotate.y(), Eigen::Vector3d(0, 1, 0)));
+            Eigen::Affine3d(Eigen::AngleAxisd(rotate.y() * M_PI / 180.0, Eigen::Vector3d(0, 1, 0)));
         Eigen::Affine3d rz =
-            Eigen::Affine3d(Eigen::AngleAxisd(rotate.z(), Eigen::Vector3d(0, 0, 1)));
+            Eigen::Affine3d(Eigen::AngleAxisd(rotate.z() * M_PI / 180.0, Eigen::Vector3d(0, 0, 1)));
         Eigen::Affine3d rot = rz * ry * rx;
         Eigen::Affine3d tran = Eigen::Affine3d(Eigen::Translation3d(translate));
         Eigen::Affine3d sca(Eigen::Scaling(scale));
