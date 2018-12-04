@@ -3,7 +3,7 @@
 
 This is my version of a randomized raytracer. Instead of sending a ray at every pixel into the scene, it sends a ray at every pixel in a random direction. Therefore more iterations of random rays create a more visually stunning image. However since it needs more rays it also takes more time to complete processing. 
 
-Materials were based off of Peter Shirley's algorithms for metal, glass and lambertian. Randomized ray tracer based off of Peter Shirley's raytracer in on weekend project.
+Materials were based off of Peter Shirley's algorithms for metal, glass and lambertian. Randomized ray tracer based off of Peter Shirley's raytracer in one weekend project.
 
 Features:
 * Obj loading
