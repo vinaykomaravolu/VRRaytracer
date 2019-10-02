@@ -24,4 +24,4 @@ NOTE:
 
 TO RUN:
 
-run "run" shell script. The raytracer is already built with default low resolution settings
+run "run" shell script. The raytracer is already built with default low resolution settings!
